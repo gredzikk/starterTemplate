@@ -17,10 +17,14 @@ namespace starterTemplate
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ILogger _logger;
         public string Version { get; }
-        public MainWindow()
+
+        public MainWindow(ILogger logger)
         {
             InitializeComponent();
+            _logger = logger;
+            _logger.LogInfo("MainWindow initialized.");
             Version = GetVersionString();
             DataContext = this;
         }

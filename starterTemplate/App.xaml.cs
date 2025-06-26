@@ -1,26 +1,41 @@
-﻿using System.Configuration;
-using System.Data;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
 namespace starterTemplate
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public static IServiceProvider ServiceProvider { get; private set; }
+
+        public App()
+        {
+            var services = new ServiceCollection();
+            ConfigureServices(services);
+            ServiceProvider = services.BuildServiceProvider();
+        }
+
+        private void ConfigureServices(IServiceCollection services)
+        {
+            services.AddSingleton<ILogger, FileLogger>();
+            services.AddSingleton<MainWindow>();
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            FileLogger.Initialize();
-            FileLogger.LogInfo($"Application starting.");
+            var logger = ServiceProvider.GetRequiredService<ILogger>();
+            logger.Initialize();
+            logger.LogInfo("Application starting.");
+
+            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
         }
 
         protected override void OnExit(ExitEventArgs e)
         {
-            FileLogger.LogInfo("Application exiting.");
+            var logger = ServiceProvider.GetRequiredService<ILogger>();
+            logger.LogInfo("Application exiting.");
             base.OnExit(e);
         }
     }
 }
-

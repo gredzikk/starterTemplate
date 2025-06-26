@@ -7,10 +7,18 @@ namespace starterTemplate
     /// <summary>
     /// Provides static methods for logging messages to a file and to the console with colored output.
     /// </summary>
-    public static class FileLogger
+    public interface ILogger
     {
-        private static string _logFilePath = string.Empty;
-        private static readonly object _lock = new object();
+        void Initialize(string logDirectory = "logs");
+        void LogInfo(string message);
+        void LogWarning(string message);
+        void LogError(string message, Exception? ex = null);
+    }
+
+    public class FileLogger : ILogger
+    {
+        private string _logFilePath = string.Empty;
+        private readonly object _lock = new object();
 
         /// <summary>
         /// Initializes the logger. Creates a log directory if it doesn't exist and sets up the log file path.
@@ -18,7 +26,7 @@ namespace starterTemplate
         /// Logs initialization status to both console (with color) and file.
         /// </summary>
         /// <param name="logDirectory">The name of the subdirectory within the application's base directory where logs will be stored. Defaults to "logs".</param>
-        public static void Initialize(string logDirectory = "logs")
+        public void Initialize(string logDirectory = "logs")
         {
             try
             {
@@ -44,7 +52,7 @@ namespace starterTemplate
         /// Logs an informational message to console (Green) and to file.
         /// </summary>
         /// <param name="message">The message to log.</param>
-        public static void LogInfo(string message)
+        public void LogInfo(string message)
         {
             Log("INFO", message);
         }
@@ -53,7 +61,7 @@ namespace starterTemplate
         /// Logs a warning message to console (Yellow) and to file.
         /// </summary>
         /// <param name="message">The warning message to log.</param>
-        public static void LogWarning(string message)
+        public void LogWarning(string message)
         {
             Log("WARN", message);
         }
@@ -63,7 +71,7 @@ namespace starterTemplate
         /// </summary>
         /// <param name="message">The error message to log.</param>
         /// <param name="ex">The exception associated with the error, if any. Its type, message, and stack trace will be logged.</param>
-        public static void LogError(string message, Exception? ex = null)
+        public void LogError(string message, Exception? ex = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append(message);
@@ -83,7 +91,7 @@ namespace starterTemplate
         /// </summary>
         /// <param name="level">The log level (e.g., "INFO", "WARN", "ERROR").</param>
         /// <param name="message">The message content to log.</param>
-        private static void Log(string level, string message)
+        private void Log(string level, string message)
         {
             string logEntryContent = $"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} [{level}] {message}";
 
