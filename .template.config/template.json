@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Your Name",
+  "classifications": [ "Common", "WPF" ],
+  "identity": "StarterTemplate.WPF.CSharp",
+  "name": "WPF Starter Template",
+  "shortName": "wpfstart",
+  "sourceName": "starterTemplate",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  }
+}
