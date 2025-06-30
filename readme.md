@@ -4,38 +4,29 @@ A clean and ready-to-use WPF project template for .NET, designed to kickstart yo
 
 ## Features
 
-- **Dependency Injection**: Pre-configured with `Microsoft.Extensions.DependencyInjection` for building modular and testable applications.
-- **File Logging**: A simple yet effective file logger ([`ILogger`](starterTemplate/Logger.cs)) is set up to log application events, warnings, and errors. Logs are stored in a `logs` directory.
-- **Automatic Version Display**: The application's version number is automatically retrieved from the assembly ([`AssemblyInfo.cs`](starterTemplate/AssemblyInfo.cs)) and displayed in the [`MainWindow`](starterTemplate/MainWindow.xaml).
+- **File Logging**: A simple file logger ([`ILogger`](starterTemplate/Logger.cs)) is set up to log application events, warnings, and errors. Logs are stored in a `logs` directory.
+- **Automatic Version Display**: The application's version number is automatically retrieved from the assembly ([`AssemblyInfo.cs`](starterTemplate/AssemblyInfo.cs)).
 - **Automated Release Packaging**: When you build the project in `Release` configuration, a ZIP archive of the application is automatically created in the [`Releases`](Releases/) folder.
-- **.NET Template**: Easily create new projects from this template using the `dotnet new` command, with automatic renaming of the project and namespaces.
+- **.NET Template**: Easily create new projects from this template, with automatic renaming of the project and namespaces.
+- **Fluent theme**: App theme is set to Microsoft's NET9.0 built-in Fluent theme known from Windows 11 OS.
 
 ## Prerequisites
 
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later.
+- [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0) or later.
 
 ## Installation
 
-1.  Clone or download this repository.
-2.  Open a terminal or command prompt and navigate to the root directory of the `starterTemplate` project.
-3.  Run the following command to install the project as a new template on your machine:
+1. Clone or download this repository.
+2. Open a terminal or command prompt and navigate to the root directory of the `starterTemplate` project.
+3. Run the following command to install the project as a new template on your machine:
 
     ```sh
-    dotnet new --install .
+    dotnet new install .
     ```
 
 ## Usage
 
 Once the template is installed, you can create a new project from it.
-
-1.  Navigate to the directory where you want to create your new project.
-2.  Run the following command, replacing `MyNewAwesomeApp` with your desired project name:
-
-    ```sh
-    dotnet new wpfstart -n MyNewAwesomeApp
-    ```
-
-This will create a new folder named `MyNewAwesomeApp` containing your new WPF project, with the solution, project files, and namespaces all correctly named.
 
 ## Configuration
 
