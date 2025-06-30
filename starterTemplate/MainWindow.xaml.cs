@@ -26,6 +26,7 @@ namespace starterTemplate
             _logger = logger;
             _logger.LogInfo("MainWindow initialized.");
             Version = GetVersionString();
+            this.Title = $"Main {Version}";
             DataContext = this;
         }
 
