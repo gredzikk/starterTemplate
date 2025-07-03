@@ -7,7 +7,6 @@
         <UseWPF>true</UseWPF>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <Deterministic>false</Deterministic>
-        <ApplicationIcon>Assets/icons8-template-64.ico</ApplicationIcon>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"
@@ -28,7 +27,7 @@
         <!-- Define paths -->
         <PropertyGroup>
             <ReleaseDir>$(SolutionDir)Releases</ReleaseDir>
-            <ZipFileName>$(AssemblyName)_$(FormattedVersionNumber)_net8-0.zip</ZipFileName>
+            <ZipFileName>$(AssemblyName)_$(FormattedVersionNumber)_net9-0.zip</ZipFileName>
             <ZipFilePath>$(ReleaseDir)\$(ZipFileName)</ZipFilePath>
         </PropertyGroup>
         <!-- Create the Releases directory if it doesn't exist -->

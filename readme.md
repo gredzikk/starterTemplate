@@ -30,10 +30,6 @@ Once the template is installed, you can create a new project from it.
 
 ## Configuration
 
-### Application Icon
-
-The application icon can be changed by replacing the [`Assets/icons8-template-64.ico`](starterTemplate/Assets/icons8-template-64.ico) file and updating the `<ApplicationIcon>` tag in the [`starterTemplate.csproj`](starterTemplate/starterTemplate.csproj) file.
-
 ### Assembly Version
 
 The version number is managed in [`AssemblyInfo.cs`](starterTemplate/AssemblyInfo.cs). The `AssemblyVersion` attribute supports wildcards (`*`) for automatic build and revision numbers.

@@ -12,9 +12,6 @@ using System.Windows.Shapes;
 
 namespace starterTemplate
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private readonly ILogger _logger;
