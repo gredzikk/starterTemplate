@@ -1,13 +1,33 @@
 {
   "$schema": "http://json.schemastore.org/template",
   "author": "Your Name",
-  "classifications": [ "Common", "WPF" ],
-  "identity": "StarterTemplate.WPF.CSharp",
-  "name": "WPF Starter Template",
-  "shortName": "wpfstart",
+  "classifications": [ "Common", "WPF", "MVVM", "CommunityToolkit" ],
+  "identity": "StarterTemplate.WPF.MVVM.CSharp",
+  "name": "WPF MVVM Starter Template",
+  "shortName": "wpfmvvm",
   "sourceName": "starterTemplate",
+  "description": "A modern WPF starter template with MVVM, CommunityToolkit, DI, and logging",
   "tags": {
     "language": "C#",
     "type": "project"
-  }
+  },
+  "symbols": {
+    "skipRestore": {
+      "type": "parameter",
+      "datatype": "bool",
+      "defaultValue": "false",
+      "description": "If specified, skips the automatic restore of the project on create."
+    }
+  },
+  "postActions": [
+    {
+      "condition": "(!skipRestore)",
+      "description": "Restore NuGet packages required by this project.",
+      "manualInstructions": [
+        { "text": "Run 'dotnet restore'" }
+      ],
+      "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
+      "continueOnError": true
+    }
+  ]
 }

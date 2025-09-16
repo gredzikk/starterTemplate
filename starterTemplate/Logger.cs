@@ -1,15 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.IO;
+using Microsoft.Extensions.Configuration;
 
 namespace starterTemplate
 {
-    /// <summary>
-    /// Provides static methods for logging messages to a file and to the console with colored output.
-    /// </summary>
     public interface ILogger
     {
-        void Initialize(string logDirectory = "logs");
+        void Initialize();
         void LogInfo(string message);
         void LogWarning(string message);
         void LogError(string message, Exception? ex = null);
@@ -17,22 +13,24 @@ namespace starterTemplate
 
     public class FileLogger : ILogger
     {
+        private readonly IConfiguration _configuration;
         private string _logFilePath = string.Empty;
         private readonly object _lock = new object();
 
-        /// <summary>
-        /// Initializes the logger. Creates a log directory if it doesn't exist and sets up the log file path.
-        /// The log file name is based on the current timestamp (yyMMdd_HHmmss).
-        /// Logs initialization status to both console (with color) and file.
-        /// </summary>
-        /// <param name="logDirectory">The name of the subdirectory within the application's base directory where logs will be stored. Defaults to "logs".</param>
-        public void Initialize(string logDirectory = "logs")
+        public FileLogger(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public void Initialize()
         {
             try
             {
+                string logDirectory = _configuration["Logging:Directory"] ?? "logs";
                 string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
                 string logsSubDir = Path.Combine(baseDirectory, logDirectory);
-                Directory.CreateDirectory(logsSubDir); // Ensure directory exists
+                Directory.CreateDirectory(logsSubDir);
+                
                 string timestamp = DateTime.Now.ToString("yyMMdd_HHmmss");
                 _logFilePath = Path.Combine(logsSubDir, $"{timestamp}.log");
 
@@ -40,11 +38,10 @@ namespace starterTemplate
             }
             catch (Exception ex)
             {
-                ConsoleColor originalColor = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine($"{DateTime.Now:yyyy-MM-dd HH:mm:ss.fff} [INIT_FAIL] Failed to initialize logger: {ex.Message}");
-                Console.ForegroundColor = originalColor;
-                _logFilePath = string.Empty; // Ensure log path is empty so file logging is skipped
+                Console.ResetColor();
+                _logFilePath = string.Empty;
             }
         }
 
