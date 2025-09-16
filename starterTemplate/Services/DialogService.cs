@@ -1,3 +1,6 @@
+using System.Windows;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace starterTemplate.Services;
 
 public interface IDialogService

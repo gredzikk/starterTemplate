@@ -1,40 +1,55 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using starterTemplate.ViewModels;
 using System.Windows;
 
 namespace starterTemplate
 {
     public partial class App : Application
     {
-        public static IServiceProvider ServiceProvider { get; private set; }
+        private readonly IHost _host;
 
         public App()
         {
-            var services = new ServiceCollection();
-            ConfigureServices(services);
-            ServiceProvider = services.BuildServiceProvider();
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureServices(ConfigureServices)
+                .Build();
         }
 
         private void ConfigureServices(IServiceCollection services)
         {
+            // Core services
             services.AddSingleton<ILogger, FileLogger>();
-            services.AddSingleton<MainWindow>();
+            
+            // ViewModels
+            services.AddTransient<MainWindowViewModel>();
+            
+            // Views
+            services.AddTransient<MainWindow>();
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            var logger = ServiceProvider.GetRequiredService<ILogger>();
+            await _host.StartAsync();
+            
+            var logger = _host.Services.GetRequiredService<ILogger>();
             logger.Initialize();
             logger.LogInfo("Application starting.");
 
-            var mainWindow = ServiceProvider.GetRequiredService<MainWindow>();
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
+            
+            base.OnStartup(e);
         }
 
-        protected override void OnExit(ExitEventArgs e)
+        protected override async void OnExit(ExitEventArgs e)
         {
-            var logger = ServiceProvider.GetRequiredService<ILogger>();
-            logger.LogInfo("Application exiting.");
+            var logger = _host.Services.GetService<ILogger>();
+            logger?.LogInfo("Application exiting.");
+            
+            await _host.StopAsync();
+            _host.Dispose();
+            
             base.OnExit(e);
         }
     }

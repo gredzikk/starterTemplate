@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text;
 using Microsoft.Extensions.Configuration;
 
 namespace starterTemplate
