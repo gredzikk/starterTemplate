@@ -37,3 +37,30 @@ The version number is managed in [`AssemblyInfo.cs`](starterTemplate/AssemblyInf
 ````csharp
 // starterTemplate/AssemblyInfo.cs
 [assembly: AssemblyVersion("1.0.*")]
+
+
+
+
+// Create different named logger instances
+var mainLogger = LoggerFactory.CreateLogger(configuration, "main");
+var apiLogger = LoggerFactory.CreateLogger(configuration, "api");
+var dbLogger = LoggerFactory.CreateLogger(configuration, "db");
+
+// Initialize all loggers
+mainLogger.Initialize();
+apiLogger.Initialize();
+dbLogger.Initialize();
+
+// Use them separately
+mainLogger.LogInfo("Application started");
+apiLogger.LogInfo("Making API call to TestLink");
+dbLogger.LogError("Database connection failed", exception);
+
+
+// In Program.cs or Startup.cs
+services.AddSingleton<ILogger>(provider => 
+    LoggerFactory.CreateLogger(provider.GetService<IConfiguration>(), "main"));
+
+// Or create a factory service
+services.AddSingleton<Func<string, ILogger>>(provider => 
+    name => LoggerFactory.CreateLogger(provider.GetService<IConfiguration>(), name));
